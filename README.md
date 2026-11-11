@@ -1,7 +1,7 @@
 # AlexNet 实现 Fashion-MNIST 分类
 
-这是一个逐阶段完成的教学项目。当前阶段：项目搭建与环境验证。
-模型、数据处理、训练和实验报告将在后续阶段逐步编写，尚无准确率结果。
+这是一个逐阶段完成的教学项目。当前阶段：数据读取、划分与可视化。
+已完成环境搭建和数据模块；模型、训练和实验报告将在后续阶段编写，尚无准确率结果。
 
 ## 学习顺序与验收
 
@@ -39,11 +39,24 @@ python -m venv .venv
 实际依赖版本已记录在 `requirements-lock.txt`。相同平台重建时，使用锁定版本：
 
 ```powershell
-.\.venv\Scripts\python.exe -m pip install -r requirements-lock.txt --index-url https://download.pytorch.org/whl/cu126
+.\.venv\Scripts\python.exe -m pip install -r requirements-lock.txt --extra-index-url https://download.pytorch.org/whl/cu126
 ```
 
 该清单对应 Windows、Python 3.13、CUDA 12.6 构建；其他平台需要重新选择兼容构建。
 GPU 依赖体积较大，首次下载需要时间。
+
+## 第二阶段运行方式
+
+```powershell
+.\.venv\Scripts\python.exe -m src.data --download
+.\.venv\Scripts\python.exe -m src.visualize
+.\.venv\Scripts\python.exe -m unittest discover -s tests -v
+.\.venv\Scripts\python.exe -m ruff check src scripts tests
+```
+
+逐函数说明见 [第二阶段教程](docs/02_data.md)。首次准备后可省略 `--download` 离线运行。
+划分索引保存在 `data/splits/`，摘要和样例图保存在 `results/`。
+第二阶段增加了 Matplotlib 绘图依赖和 Ruff 开发工具，版本统一保存在锁定清单。
 
 ## 实验规则
 

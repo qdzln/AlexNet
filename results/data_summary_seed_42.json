@@ -1,0 +1,72 @@
+{
+  "dataset": "FashionMNIST",
+  "seed": 42,
+  "split_sha256": "c7fec5ca9c3adf06342c8d1d6c24ed05b954bad108e2c147022f7a39fddb542f",
+  "split_file": "data/splits/seed_42.json",
+  "train_size": 54000,
+  "val_size": 6000,
+  "test_size": 10000,
+  "class_names": [
+    "T-shirt/top",
+    "Trouser",
+    "Pullover",
+    "Dress",
+    "Coat",
+    "Sandal",
+    "Shirt",
+    "Sneaker",
+    "Bag",
+    "Ankle boot"
+  ],
+  "train_class_counts": [
+    5400,
+    5400,
+    5400,
+    5400,
+    5400,
+    5400,
+    5400,
+    5400,
+    5400,
+    5400
+  ],
+  "val_class_counts": [
+    600,
+    600,
+    600,
+    600,
+    600,
+    600,
+    600,
+    600,
+    600,
+    600
+  ],
+  "test_class_counts": [
+    1000,
+    1000,
+    1000,
+    1000,
+    1000,
+    1000,
+    1000,
+    1000,
+    1000,
+    1000
+  ],
+  "batch_shape": [
+    64,
+    1,
+    28,
+    28
+  ],
+  "labels_shape": [
+    64
+  ],
+  "image_dtype": "torch.float32",
+  "label_dtype": "torch.int64",
+  "batch_pixel_range": [
+    0.0,
+    1.0
+  ]
+}
