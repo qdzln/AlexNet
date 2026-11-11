@@ -1,0 +1,351 @@
+{
+  "model": "AlexNet-FashionMNIST-96",
+  "seed": 42,
+  "device": "cpu",
+  "use_bn": false,
+  "dropout": 0.0,
+  "batch_size": 2,
+  "input_shape": [
+    2,
+    1,
+    96,
+    96
+  ],
+  "output_shape": [
+    2,
+    10
+  ],
+  "parameters": 4516554,
+  "initial_batch_loss": 2.331587076187134,
+  "all_gradients_finite": true,
+  "optimizer_steps": 0,
+  "layers": [
+    {
+      "name": "features.conv1",
+      "type": "Conv2d",
+      "input_shape": [
+        2,
+        1,
+        96,
+        96
+      ],
+      "output_shape": [
+        2,
+        96,
+        23,
+        23
+      ],
+      "parameters": 11712
+    },
+    {
+      "name": "features.relu1",
+      "type": "ReLU",
+      "input_shape": [
+        2,
+        96,
+        23,
+        23
+      ],
+      "output_shape": [
+        2,
+        96,
+        23,
+        23
+      ],
+      "parameters": 0
+    },
+    {
+      "name": "features.pool1",
+      "type": "MaxPool2d",
+      "input_shape": [
+        2,
+        96,
+        23,
+        23
+      ],
+      "output_shape": [
+        2,
+        96,
+        11,
+        11
+      ],
+      "parameters": 0
+    },
+    {
+      "name": "features.conv2",
+      "type": "Conv2d",
+      "input_shape": [
+        2,
+        96,
+        11,
+        11
+      ],
+      "output_shape": [
+        2,
+        256,
+        11,
+        11
+      ],
+      "parameters": 614656
+    },
+    {
+      "name": "features.relu2",
+      "type": "ReLU",
+      "input_shape": [
+        2,
+        256,
+        11,
+        11
+      ],
+      "output_shape": [
+        2,
+        256,
+        11,
+        11
+      ],
+      "parameters": 0
+    },
+    {
+      "name": "features.pool2",
+      "type": "MaxPool2d",
+      "input_shape": [
+        2,
+        256,
+        11,
+        11
+      ],
+      "output_shape": [
+        2,
+        256,
+        5,
+        5
+      ],
+      "parameters": 0
+    },
+    {
+      "name": "features.conv3",
+      "type": "Conv2d",
+      "input_shape": [
+        2,
+        256,
+        5,
+        5
+      ],
+      "output_shape": [
+        2,
+        384,
+        5,
+        5
+      ],
+      "parameters": 885120
+    },
+    {
+      "name": "features.relu3",
+      "type": "ReLU",
+      "input_shape": [
+        2,
+        384,
+        5,
+        5
+      ],
+      "output_shape": [
+        2,
+        384,
+        5,
+        5
+      ],
+      "parameters": 0
+    },
+    {
+      "name": "features.conv4",
+      "type": "Conv2d",
+      "input_shape": [
+        2,
+        384,
+        5,
+        5
+      ],
+      "output_shape": [
+        2,
+        384,
+        5,
+        5
+      ],
+      "parameters": 1327488
+    },
+    {
+      "name": "features.relu4",
+      "type": "ReLU",
+      "input_shape": [
+        2,
+        384,
+        5,
+        5
+      ],
+      "output_shape": [
+        2,
+        384,
+        5,
+        5
+      ],
+      "parameters": 0
+    },
+    {
+      "name": "features.conv5",
+      "type": "Conv2d",
+      "input_shape": [
+        2,
+        384,
+        5,
+        5
+      ],
+      "output_shape": [
+        2,
+        256,
+        5,
+        5
+      ],
+      "parameters": 884992
+    },
+    {
+      "name": "features.relu5",
+      "type": "ReLU",
+      "input_shape": [
+        2,
+        256,
+        5,
+        5
+      ],
+      "output_shape": [
+        2,
+        256,
+        5,
+        5
+      ],
+      "parameters": 0
+    },
+    {
+      "name": "features.pool5",
+      "type": "MaxPool2d",
+      "input_shape": [
+        2,
+        256,
+        5,
+        5
+      ],
+      "output_shape": [
+        2,
+        256,
+        2,
+        2
+      ],
+      "parameters": 0
+    },
+    {
+      "name": "flatten",
+      "type": "Flatten",
+      "input_shape": [
+        2,
+        256,
+        2,
+        2
+      ],
+      "output_shape": [
+        2,
+        1024
+      ],
+      "parameters": 0
+    },
+    {
+      "name": "classifier.fc1",
+      "type": "Linear",
+      "input_shape": [
+        2,
+        1024
+      ],
+      "output_shape": [
+        2,
+        512
+      ],
+      "parameters": 524800
+    },
+    {
+      "name": "classifier.relu6",
+      "type": "ReLU",
+      "input_shape": [
+        2,
+        512
+      ],
+      "output_shape": [
+        2,
+        512
+      ],
+      "parameters": 0
+    },
+    {
+      "name": "classifier.dropout1",
+      "type": "Dropout",
+      "input_shape": [
+        2,
+        512
+      ],
+      "output_shape": [
+        2,
+        512
+      ],
+      "parameters": 0
+    },
+    {
+      "name": "classifier.fc2",
+      "type": "Linear",
+      "input_shape": [
+        2,
+        512
+      ],
+      "output_shape": [
+        2,
+        512
+      ],
+      "parameters": 262656
+    },
+    {
+      "name": "classifier.relu7",
+      "type": "ReLU",
+      "input_shape": [
+        2,
+        512
+      ],
+      "output_shape": [
+        2,
+        512
+      ],
+      "parameters": 0
+    },
+    {
+      "name": "classifier.dropout2",
+      "type": "Dropout",
+      "input_shape": [
+        2,
+        512
+      ],
+      "output_shape": [
+        2,
+        512
+      ],
+      "parameters": 0
+    },
+    {
+      "name": "classifier.fc3",
+      "type": "Linear",
+      "input_shape": [
+        2,
+        512
+      ],
+      "output_shape": [
+        2,
+        10
+      ],
+      "parameters": 5130
+    }
+  ]
+}
