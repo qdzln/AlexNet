@@ -1,0 +1,20 @@
+{
+  "run_name": "stage5_finalist",
+  "best_epoch": 10,
+  "split_sha256": "c7fec5ca9c3adf06342c8d1d6c24ed05b954bad108e2c147022f7a39fddb542f",
+  "train": {
+    "loss": 0.08523077628564055,
+    "accuracy": 0.9684444444444444,
+    "correct": 52296,
+    "samples": 54000
+  },
+  "val": {
+    "loss": 0.2622664148561501,
+    "accuracy": 0.92,
+    "correct": 5520,
+    "samples": 6000
+  },
+  "test": null,
+  "test_status": "not_evaluated",
+  "seconds": 258.4113531000039
+}

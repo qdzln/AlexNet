@@ -1,0 +1,20 @@
+{
+  "run_name": "stage5_sgdm_lr001",
+  "best_epoch": 5,
+  "split_sha256": "c7fec5ca9c3adf06342c8d1d6c24ed05b954bad108e2c147022f7a39fddb542f",
+  "train": {
+    "loss": 0.1933554964622793,
+    "accuracy": 0.9291296296296296,
+    "correct": 50173,
+    "samples": 54000
+  },
+  "val": {
+    "loss": 0.27056223395171886,
+    "accuracy": 0.9025,
+    "correct": 5415,
+    "samples": 6000
+  },
+  "test": null,
+  "test_status": "not_evaluated",
+  "seconds": 100.19555059999402
+}

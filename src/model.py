@@ -32,6 +32,25 @@ def prepare_images(images: torch.Tensor) -> torch.Tensor:
     return (resized - 0.5) / 0.5
 
 
+class AttentionPool(nn.Module):
+    """让四个空间位置交换信息，再汇总为一个分类特征向量。"""
+
+    def __init__(self) -> None:
+        """创建位置参数、四头自注意力和残差后的层归一化。"""
+        super().__init__()
+        self.position = nn.Parameter(torch.zeros(1, 4, 256))
+        self.attention = nn.MultiheadAttention(256, num_heads=4, batch_first=True)
+        self.norm = nn.LayerNorm(256)
+
+    def forward(self, features: torch.Tensor) -> torch.Tensor:
+        """把 [N,256,2,2] 变成四个 token，并返回 [N,256] 的汇总特征。"""
+        # 每个 token 对应一个空间位置，包含该位置的全部 256 个通道。
+        tokens = features.flatten(2).transpose(1, 2) + self.position
+        # Q、K、V 均来自这组 token，所以称为自注意力。
+        attended, _ = self.attention(tokens, tokens, tokens, need_weights=False)
+        return self.norm(tokens + attended).mean(dim=1)
+
+
 class AlexNet(nn.Module):
     """灰度图 AlexNet 适配版：5 个卷积层、3 个全连接层，输出 10 类原始分数。
 
@@ -39,17 +58,20 @@ class AlexNet(nn.Module):
     输入固定为 [N,1,96,96]，BN 与 Dropout 可独立开关用于后续实验。
     """
 
-    def __init__(self, use_bn: bool = False, dropout: float = 0.0) -> None:
+    def __init__(self, use_bn: bool = False, dropout: float = 0.0, head: str = "linear") -> None:
         """创建所有可训练层；use_bn 控制批归一化，dropout 是随机丢弃概率。
 
         默认关闭 BN 和 Dropout，作为对照实验基线；不代表原论文的默认设置。
-        Dropout 必须满足 0 <= dropout < 1，否则抛出 ValueError。
+        Dropout 必须满足 0 <= dropout < 1。head 选择线性或注意力分类头。
         """
         super().__init__()
         if not 0 <= dropout < 1:
             raise ValueError("dropout must satisfy 0 <= dropout < 1")
+        if head not in ("linear", "attention"):
+            raise ValueError("head must be linear or attention")
         self.use_bn = use_bn
         self.dropout = dropout
+        self.head = head
         # 每项依次为：输入通道、输出通道、卷积核大小、步长、填充。
         specifications = [
             (1, 96, 11, 4, 2),
@@ -72,6 +94,19 @@ class AlexNet(nn.Module):
             if number in (1, 2, 5):
                 layers[f"pool{number}"] = nn.MaxPool2d(kernel_size=3, stride=2)
         self.features = nn.Sequential(layers)
+        if head == "attention":
+            self.attention_pool = AttentionPool()
+            self.classifier = nn.Sequential(
+                OrderedDict(
+                    [
+                        ("fc2", nn.Linear(256, 512)),
+                        ("relu7", nn.ReLU()),
+                        ("dropout2", nn.Dropout(dropout)),
+                        ("fc3", nn.Linear(512, 10)),
+                    ]
+                )
+            )
+            return
         self.flatten = nn.Flatten(start_dim=1)
         # 最后一层池化后为 [N,256,2,2]，展平后每张图有 1024 个特征。
         self.classifier = nn.Sequential(
@@ -97,8 +132,10 @@ class AlexNet(nn.Module):
         if images.ndim != 4 or tuple(images.shape[1:]) != (1, IMAGE_SIZE, IMAGE_SIZE):
             raise ValueError("Expected [N,1,96,96]; call prepare_images first")
         features = self.features(images)
-        flattened = self.flatten(features)
-        return self.classifier(flattened)
+        vector = (
+            self.attention_pool(features) if self.head == "attention" else self.flatten(features)
+        )
+        return self.classifier(vector)
 
 
 def describe_shapes(model: AlexNet, images: torch.Tensor) -> list[dict]:
@@ -112,7 +149,7 @@ def describe_shapes(model: AlexNet, images: torch.Tensor) -> list[dict]:
     modes = {module: module.training for module in model.modules()}
 
     def record_shape(module: nn.Module, inputs: tuple, output: torch.Tensor) -> None:
-        """作为前向 hook 记录当前叶子层的输入、输出形状及参数量。"""
+        """记录叶子层或整个注意力汇总模块的输入、输出形状与参数量。"""
         records.append(
             {
                 "name": names[module],
@@ -126,7 +163,10 @@ def describe_shapes(model: AlexNet, images: torch.Tensor) -> list[dict]:
     names = {module: name for name, module in model.named_modules() if name}
     try:
         for module in names:
-            if not list(module.children()):
+            # 注意力内部有位置参数和多返回值子层，整体打印可避免漏算或重复计算。
+            if names[module].startswith("attention_pool."):
+                continue
+            if isinstance(module, AttentionPool) or not list(module.children()):
                 handles.append(module.register_forward_hook(record_shape))
         model.eval()
         with torch.no_grad():

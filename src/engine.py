@@ -119,6 +119,8 @@ def load_checkpoint(path: Path, device: torch.device) -> tuple[AlexNet, dict]:
     if checkpoint.get("format_version") != 1:
         raise ValueError("Unsupported checkpoint format")
     config = checkpoint["config"]
-    model = AlexNet(use_bn=config["use_bn"], dropout=config["dropout"])
+    # 第四阶段的检查点没有 head 字段，仍按原来的线性分类头重建。
+    head_options = {"head": config["head"]} if "head" in config else {}
+    model = AlexNet(use_bn=config["use_bn"], dropout=config["dropout"], **head_options)
     model.load_state_dict(checkpoint["model_state"])
     return model.to(device).eval(), checkpoint

@@ -1,0 +1,22 @@
+{
+  "python": "3.13.16",
+  "torch": "2.14.1+cu126",
+  "cuda_runtime": "12.6",
+  "device": "cuda",
+  "gpu": "NVIDIA GeForce RTX 3050 Ti Laptop GPU",
+  "split_sha256": "c7fec5ca9c3adf06342c8d1d6c24ed05b954bad108e2c147022f7a39fddb542f",
+  "train_size": 54000,
+  "val_size": 6000,
+  "source_sha256": {
+    "src\\__init__.py": "02b2bdfbd2d0d69d6116e48b5b42b332c46671a256b45bc591b2f705cf855276",
+    "src\\data.py": "6ba6443e833a4c049b5574bab9083744463b6618f151ff1ea4009d647da3cf4e",
+    "src\\engine.py": "e2f175f7e62ed3d2bff6af633130dd6f737b6cf003d3d6eca9b2f6f5908dd1c6",
+    "src\\evaluate.py": "2e25ee46a4a5d7264960611e07d1684da68a4d36dcf22ecf37e29239b77938cb",
+    "src\\inspect_model.py": "3ce50989ab9905d749ee02a8031ec13c8a32c2df61d421a5b205786996c96d4b",
+    "src\\model.py": "b5d3029a1ea02522135d4b790bf51f3540f6dbbbb5c0100f0ef087b96865f23f",
+    "src\\plot_history.py": "fefac0707410252e371991c06a95282678aa7bbc5f5ef43fa63bf992f9d81589",
+    "src\\run_experiments.py": "9e1eba48447132d732e7d4d0f9da598acebad0d218d6b3d10e84b7e23edec93c",
+    "src\\train.py": "32442e855447ee304c9a9625f34c40e9107459eb5aa91877c5b7c0000d259456",
+    "src\\visualize.py": "99b8524c276fbbb0551b8e59872851164a98de114c8cc5aa2d9333823272c65c"
+  }
+}

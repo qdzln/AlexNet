@@ -1,7 +1,7 @@
 # AlexNet 实现 Fashion-MNIST 分类
 
-这是一个逐阶段完成的教学项目。当前阶段：训练、验证与检查点管理。
-已完成环境、数据和手写 AlexNet；本阶段运行基线训练，后续进行系统对照与最终测试。
+这是一个逐阶段完成的教学项目。第五阶段完成 BN、Dropout、SGD 动量和自注意力对照。
+按验证集选出的最终模型在完整测试集上正确分类 9,201／10,000 张，准确率为 **92.01%**。
 
 ## 学习顺序与验收
 
@@ -58,7 +58,7 @@ GPU 依赖体积较大，首次下载需要时间。
 划分索引保存在 `data/splits/`，摘要和样例图保存在 `results/`。
 第二阶段增加了 Matplotlib 绘图依赖和 Ruff 开发工具，版本统一保存在锁定清单。
 
-## 实验规则
+## 第三、四阶段运行方式
 
 第三阶段说明见 [网络教程](docs/03_model.md)，第四阶段见 [训练教程](docs/04_training.md)。
 
@@ -69,7 +69,22 @@ GPU 依赖体积较大，首次下载需要时间。
 
 训练默认运行 5 轮，使用完整训练集与验证集，产物保存在 `outputs/<实验名>/`。
 同名目录禁止覆盖，重复实验请换名称。训练程序不读取测试集；最终确定实验方案后，
-才使用独立评估入口的 `--split test`。测试准确率目标仍待最终测试验收。
+才使用独立评估入口的 `--split test`。
+
+## 第五阶段运行方式
+
+对照计划见[实验计划](refine-logs/EXPERIMENT_PLAN.md)，代码说明见[第五阶段教程](docs/05_experiments.md)。
+
+```powershell
+.\.venv\Scripts\python.exe -m src.run_experiments train --device cuda
+.\.venv\Scripts\python.exe -m src.run_experiments test --device cuda
+.\.venv\Scripts\python.exe -m src.summarize_experiments --manifest configs/stage5_manifest.json --output results/stage5
+```
+
+运行清单给出各组配置，训练结束后按验证集封存选模结果，测试命令根据该记录加载权重。
+各次尝试和最终成绩见[第五阶段实验报告](results/stage5/README.md)。
+
+## 实验规则
 
 1. Fashion-MNIST 是 10 类、28×28 单通道灰度图；首层输入通道必须匹配。
 2. 从官方 60,000 张训练数据中按类别固定划出 6,000 张验证集，其余 54,000 张训练。

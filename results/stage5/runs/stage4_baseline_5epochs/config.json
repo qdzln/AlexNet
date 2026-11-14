@@ -1,0 +1,12 @@
+{
+  "epochs": 5,
+  "batch_size": 64,
+  "learning_rate": 0.0003,
+  "weight_decay": 0.0,
+  "optimizer": "adam",
+  "momentum": 0.0,
+  "use_bn": false,
+  "dropout": 0.0,
+  "seed": 42,
+  "split_seed": 42
+}

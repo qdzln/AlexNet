@@ -1,0 +1,49 @@
+{
+  "runs": [
+    {
+      "name": "stage4_baseline_5epochs",
+      "group": "baseline",
+      "config": "configs/baseline.json"
+    },
+    {
+      "name": "stage5_bn",
+      "group": "bn",
+      "config": "configs/stage5/bn.json"
+    },
+    {
+      "name": "stage5_dropout",
+      "group": "dropout",
+      "config": "configs/stage5/dropout.json"
+    },
+    {
+      "name": "stage5_attention",
+      "group": "attention",
+      "config": "configs/stage5/attention.json"
+    },
+    {
+      "name": "stage5_sgd_lr001",
+      "group": "sgd_no_momentum",
+      "config": "configs/stage5/sgd_lr001.json"
+    },
+    {
+      "name": "stage5_sgd_lr003",
+      "group": "sgd_no_momentum",
+      "config": "configs/stage5/sgd_lr003.json"
+    },
+    {
+      "name": "stage5_sgdm_lr001",
+      "group": "sgd_momentum",
+      "config": "configs/stage5/sgdm_lr001.json"
+    },
+    {
+      "name": "stage5_sgdm_lr003",
+      "group": "sgd_momentum",
+      "config": "configs/stage5/sgdm_lr003.json"
+    },
+    {
+      "name": "stage5_finalist",
+      "group": "finalist",
+      "config": "configs/stage5/finalist.json"
+    }
+  ]
+}

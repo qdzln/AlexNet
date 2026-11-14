@@ -1,0 +1,20 @@
+{
+  "run_name": "stage4_baseline_5epochs",
+  "best_epoch": 5,
+  "split_sha256": "c7fec5ca9c3adf06342c8d1d6c24ed05b954bad108e2c147022f7a39fddb542f",
+  "train": {
+    "loss": 0.17331121508420136,
+    "accuracy": 0.9362222222222222,
+    "correct": 50556,
+    "samples": 54000
+  },
+  "val": {
+    "loss": 0.2635050936896975,
+    "accuracy": 0.9093333333333333,
+    "correct": 5456,
+    "samples": 6000
+  },
+  "test": null,
+  "test_status": "not_evaluated",
+  "seconds": 108.75572629999988
+}

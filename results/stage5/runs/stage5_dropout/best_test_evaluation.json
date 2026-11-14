@@ -1,0 +1,11 @@
+{
+  "split": "test",
+  "epoch": 5,
+  "metrics": {
+    "loss": 0.26520593032836914,
+    "accuracy": 0.9077,
+    "correct": 9077,
+    "samples": 10000
+  },
+  "checkpoint_sha256": "ad9380c3f7896763298c7091b5ef2fc05997c1016dff74c920d03b41a441950a"
+}

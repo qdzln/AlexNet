@@ -1,0 +1,20 @@
+{
+  "run_name": "stage5_dropout",
+  "best_epoch": 5,
+  "split_sha256": "c7fec5ca9c3adf06342c8d1d6c24ed05b954bad108e2c147022f7a39fddb542f",
+  "train": {
+    "loss": 0.18960419746296248,
+    "accuracy": 0.9307037037037037,
+    "correct": 50258,
+    "samples": 54000
+  },
+  "val": {
+    "loss": 0.2738678459551302,
+    "accuracy": 0.9076666666666666,
+    "correct": 5446,
+    "samples": 6000
+  },
+  "test": null,
+  "test_status": "not_evaluated",
+  "seconds": 107.79724050000368
+}

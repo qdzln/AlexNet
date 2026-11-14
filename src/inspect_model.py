@@ -22,6 +22,7 @@ def inspect_model(
     use_bn: bool = False,
     dropout: float = 0.0,
     seed: int = 42,
+    head: str = "linear",
 ) -> dict:
     """检查模型与真实数据是否兼容，保存结构及报告并返回报告字典。
 
@@ -43,7 +44,7 @@ def inspect_model(
     raw_images, labels = next(iter(make_loader(Subset(dataset, train_indices), batch_size)))
     images = prepare_images(raw_images.to(device))
     labels = labels.to(device)
-    model = AlexNet(use_bn=use_bn, dropout=dropout).to(device)
+    model = AlexNet(use_bn=use_bn, dropout=dropout, head=head).to(device)
     print(model)
     shapes = describe_shapes(model, images)
     for row in shapes:
@@ -66,6 +67,7 @@ def inspect_model(
         "device": str(device),
         "use_bn": use_bn,
         "dropout": dropout,
+        "head": head,
         "batch_size": len(labels),
         "input_shape": list(images.shape),
         "output_shape": list(logits.shape),
@@ -79,6 +81,8 @@ def inspect_model(
         report["peak_allocated_mib"] = torch.cuda.max_memory_allocated(device) / 1024**2
     # 文件名区分网络选项与设备，防止不同验收配置相互覆盖。
     tag = f"{device.type}_bn{int(use_bn)}_dropout{dropout:g}_batch{batch_size}_seed{seed}"
+    if head != "linear":
+        tag += f"_{head}"
     output = PROJECT_ROOT / "results" / f"model_summary_{tag}.json"
     save_json(output, report)
     output.with_suffix(".txt").write_text(str(model) + "\n", encoding="utf-8")
@@ -95,8 +99,9 @@ def main() -> None:
     parser.add_argument("--batch-norm", action="store_true")
     parser.add_argument("--dropout", type=float, default=0.0)
     parser.add_argument("--seed", type=int, default=42)
+    parser.add_argument("--head", choices=("linear", "attention"), default="linear")
     args = parser.parse_args()
-    inspect_model(args.batch_size, args.device, args.batch_norm, args.dropout, args.seed)
+    inspect_model(args.batch_size, args.device, args.batch_norm, args.dropout, args.seed, args.head)
 
 
 if __name__ == "__main__":

@@ -45,8 +45,10 @@ def validate_config(config: dict) -> None:
         "seed",
         "split_seed",
     }
-    if set(config) != required:
-        raise ValueError(f"Config fields must be exactly: {sorted(required)}")
+    if not required <= set(config) <= (required | {"head"}):
+        raise ValueError(f"Config requires {sorted(required)}; head is optional")
+    if config.get("head", "linear") not in ("linear", "attention"):
+        raise ValueError("head must be linear or attention")
     for key in ("epochs", "batch_size", "seed", "split_seed"):
         if type(config[key]) is not int or config[key] < (
             1 if key in ("epochs", "batch_size") else 0
@@ -119,7 +121,8 @@ def train(config: dict, run_name: str, device_name: str = "auto") -> dict:
                 },
             },
         )
-        model = AlexNet(config["use_bn"], config["dropout"]).to(device)
+        head_options = {"head": config["head"]} if "head" in config else {}
+        model = AlexNet(config["use_bn"], config["dropout"], **head_options).to(device)
         options = {"lr": config["learning_rate"], "weight_decay": config["weight_decay"]}
         if config["optimizer"] == "adam":
             optimizer = torch.optim.Adam(model.parameters(), **options)

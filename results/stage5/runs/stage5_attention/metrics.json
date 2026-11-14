@@ -1,0 +1,20 @@
+{
+  "run_name": "stage5_attention",
+  "best_epoch": 5,
+  "split_sha256": "c7fec5ca9c3adf06342c8d1d6c24ed05b954bad108e2c147022f7a39fddb542f",
+  "train": {
+    "loss": 0.15395638297950953,
+    "accuracy": 0.9425925925925925,
+    "correct": 50900,
+    "samples": 54000
+  },
+  "val": {
+    "loss": 0.2519313206720787,
+    "accuracy": 0.9111666666666667,
+    "correct": 5467,
+    "samples": 6000
+  },
+  "test": null,
+  "test_status": "not_evaluated",
+  "seconds": 114.99937879999925
+}
