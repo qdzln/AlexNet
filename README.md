@@ -1,7 +1,7 @@
 # AlexNet 实现 Fashion-MNIST 分类
 
-这是一个逐阶段完成的教学项目。当前阶段：数据读取、划分与可视化。
-已完成环境搭建和数据模块；模型、训练和实验报告将在后续阶段编写，尚无准确率结果。
+这是一个逐阶段完成的教学项目。当前阶段：训练、验证与检查点管理。
+已完成环境、数据和手写 AlexNet；本阶段运行基线训练，后续进行系统对照与最终测试。
 
 ## 学习顺序与验收
 
@@ -59,6 +59,17 @@ GPU 依赖体积较大，首次下载需要时间。
 第二阶段增加了 Matplotlib 绘图依赖和 Ruff 开发工具，版本统一保存在锁定清单。
 
 ## 实验规则
+
+第三阶段说明见 [网络教程](docs/03_model.md)，第四阶段见 [训练教程](docs/04_training.md)。
+
+```powershell
+.\.venv\Scripts\python.exe -m src.train --config configs/baseline.json --run-name my_baseline
+.\.venv\Scripts\python.exe -m src.evaluate outputs/my_baseline/best.pt --split val
+```
+
+训练默认运行 5 轮，使用完整训练集与验证集，产物保存在 `outputs/<实验名>/`。
+同名目录禁止覆盖，重复实验请换名称。训练程序不读取测试集；最终确定实验方案后，
+才使用独立评估入口的 `--split test`。测试准确率目标仍待最终测试验收。
 
 1. Fashion-MNIST 是 10 类、28×28 单通道灰度图；首层输入通道必须匹配。
 2. 从官方 60,000 张训练数据中按类别固定划出 6,000 张验证集，其余 54,000 张训练。
