@@ -55,6 +55,8 @@ GPU 依赖体积较大，首次下载需要时间。
 ```
 
 逐函数说明见 [第二阶段教程](docs/02_data.md)。首次准备后可省略 `--download` 离线运行。
+可视化也支持直接运行 `.\.venv\Scripts\python.exe src/visualize.py`，或在编辑器中使用
+项目虚拟环境运行、调试 `src/visualize.py`；脚本会自动定位项目根目录。
 划分索引保存在 `data/splits/`，摘要和样例图保存在 `results/`。
 第二阶段增加了 Matplotlib 绘图依赖和 Ruff 开发工具，版本统一保存在锁定清单。
 

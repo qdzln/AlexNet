@@ -1,7 +1,12 @@
 """从训练子集中每类选 10 张原始图像，保存带类别标签的 10×10 网格。"""
 
 import argparse
+import sys
 from pathlib import Path
+
+if __package__ in (None, ""):
+    # 直接运行文件时搜索路径从 src 开始，需补上项目根目录才能导入 src.data。
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 import matplotlib
 
